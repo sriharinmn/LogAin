@@ -43,7 +43,7 @@ streamlit run app.py
 1. Fork the Repository
 2. Clone the Repository:
    ```bash
-   git clone https://github.com/your-username/LogAin.git
+   git clone https://github.com/sriharinmn/LogAin.git
    ```
 3. Create a Branch:
    ```bash
