@@ -1,65 +1,29 @@
-# <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=LogAin">
+# LogAin
 
-## Created During : 
-| Event Name | Event Description |
-|------------|------------------|
-| Dataset 24 | A hackathon focused on creating innovative solutions using data |
+An incident assistant for telecom network operations centres (NOCs), built at the **Dataset 24** hackathon.
 
-## Introduction
-- [Introduction](#-Introduction)
-- [Features](#-Features)
-- [Installation](#-Installation)
-- [How to Contribute?](#-How-to-Contribute)
-- [Tech Stack](#-Tech-Stack)
+Given an incident ID, LogAin pulls the incident's network measurements, predicts the likely root cause with a trained classifier, and has an LLM write a step-by-step remediation report grounded in a reference document. It also includes a chat assistant for NOC engineers and a map dashboard of affected areas.
 
+## Features
 
-##  📝 Introduction
-LogAin is an AI-powered solution that helps users solve technical problems by generating step-by-step solutions based on action taken and issue faced prompts. The system generates comprehensive reports based on templates and provides analytical insights through its dashboard.
+- **Root-cause prediction**: a scikit-learn model (`model.pkl`) classifies incidents from jitter, latency, packet loss and signal strength.
+- **Remediation reports**: retrieval-augmented generation over the PDFs in `dataset/` (FAISS + `all-MiniLM-L6-v2` embeddings, Gemma 2 9B through Groq). The report is exported as a PDF.
+- **Hand-off continuity**: engineers record the actions taken so far and the issues hit, and the next report picks up from there.
+- **NOC chat assistant** (`pages/Chatbot.py`): a conversational assistant that keeps per-session history.
+- **Dashboard** (`pages/Dashboard.py`): prototype map views of incident impact and network load, drawn from generated sample points.
 
-## ⭐ Features
-- Step-by-step solution generation using AI
-- Report generation based on templates
-- Analytics dashboard with incident issue parameters
-- Workflow continuity between multiple engineers
+The incident data in `dataset.csv` is synthetic.
 
-## ⚙️ Installation
+## Run it
 
-1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/LogAin.git
-```
-
-2. Install the Dependencies
-```bash
+git clone https://github.com/sriharinmn/LogAin.git
+cd LogAin
 pip install -r requirements.txt
+cp .env.example .env        # then add your Groq, Hugging Face and LangChain keys
+streamlit run main.py
 ```
 
-3. Run the application
-```bash
-streamlit run app.py
-```
+## Tech stack
 
-## 🤝 How to Contribute?
-1. Fork the Repository
-2. Clone the Repository:
-   ```bash
-   git clone https://github.com/sriharinmn/LogAin.git
-   ```
-3. Create a Branch:
-   ```bash
-   git checkout -b feature-or-bugfix-name
-   ```
-4. Make Changes
-5. Commit Changes:
-   ```bash
-   git commit -m "Description of your changes"
-   ```
-6. Push Changes:
-   ```bash
-   git push origin feature-or-bugfix-name
-   ```
-7. Create a Pull Request
-
-## 💻 Tech Stack
-- Streamlit
-- Python
+Python, Streamlit, scikit-learn, LangChain, Groq, Hugging Face sentence-transformers, FAISS, FPDF.

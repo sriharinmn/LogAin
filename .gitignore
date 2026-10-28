@@ -1,0 +1,11 @@
+# Secrets
+.env
+
+# Files the app writes at runtime
+temp.pdf
+temp_append.pdf
+
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
